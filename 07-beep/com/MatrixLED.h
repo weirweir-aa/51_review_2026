@@ -8,5 +8,6 @@
 #define SER P34
 
 void matrixled_init(void);
+void matrixled_init_eeprom(u8 *buf);
 
 #endif

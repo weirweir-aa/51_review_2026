@@ -1,6 +1,7 @@
 #include "util.h"
 #include "led.h"
 #include "key.h"
+#include "eeprom.h"
 #include "Dri_Timer0.h"
 #include "MatrixLED.h"
 
@@ -15,21 +16,10 @@ void timer0_count_cfg(void) //timer0的时序基础
 	}
 }
 
-// void led0_toggle_timer0(void)
-// {
-// 	if(time0_count>=200)
-// 	{
-// 		led_toggle(0);
-// 	}
-// }
-
-// void led1_toggle_timer0(void)
-// {
-// 	if(time0_count>=500)
-// 	{
-// 		led_toggle(1);
-// 	}
-// }
+// static u8 buf_eeprom[] = {
+// 	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+// };
+u8 buf_eeprom[8];
 
 void main()
 {
@@ -38,7 +28,11 @@ void main()
 	Dri_Timer0_Init();
 	Dri_Timer0_RegisterCallback(timer0_count_cfg);
 
-	matrixled_init();
+	// matrixled_init();
+	// eeprom_write_byte(0, buf_eeprom, 8);
+
+	eeprom_read_byte(0, buf_eeprom, 8);
+	matrixled_init_eeprom(buf_eeprom);
 
 	while(1)
 	{
